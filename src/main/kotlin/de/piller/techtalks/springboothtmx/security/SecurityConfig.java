@@ -43,10 +43,8 @@ class SecurityConfig {
     @Bean
     public SecurityFilterChain resourceServerFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers(new AntPathRequestMatcher("/customers*"))
+                .requestMatchers(new AntPathRequestMatcher("/*"))
                 .hasRole("user")
-                .requestMatchers(new AntPathRequestMatcher("/"))
-                .permitAll()
                 .anyRequest()
                 .authenticated());
         http.oauth2ResourceServer((oauth2) -> oauth2
