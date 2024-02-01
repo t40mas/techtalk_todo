@@ -3,6 +3,7 @@ package de.piller.techtalks.springboothtmx
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
+
 @SpringBootApplication
 class SpringBootHtmxApplication
 
