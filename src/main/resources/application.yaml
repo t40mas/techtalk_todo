@@ -1,4 +1,7 @@
 spring:
+  docker:
+    compose:
+      enabled: true
   mvc:
     hiddenmethod:
       filter:
@@ -18,11 +21,11 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:1337/realms/SpringBootHtmx
-#  datasource:
-#    url: jdbc:postgresql://localhost:1339/springboothtmx
-#    username: postgres
-#    password: 123
-#    driver-class-name: org.postgresql.Driver
-#  jpa:
-#    generate-ddl: true
+  datasource:
+    url: jdbc:postgresql://localhost:1339/springboothtmx
+    username: springboothtmx
+    password: springboothtmx
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    generate-ddl: true
 
