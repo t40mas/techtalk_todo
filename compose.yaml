@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+
+#  postgres-app:
+#    image: postgres:${POSTGRESQL_VERSION}
+#    container_name: local_postgres_springboothtmx
+#    restart: unless-stopped
+#    environment:
+#      POSTGRES_DB: ${POSTGRESQL_APP_DB}
+#      POSTGRES_USER: ${POSTGRESQL_APP_USER}
+#      POSTGRES_PASSWORD: ${POSTGRESQL_APP_PASS}
+#    networks:
+#      - local-spring
+#    ports:
+#      - "1339:5432"
+
+  postgres:
+    image: postgres:${POSTGRESQL_VERSION}
+    container_name: local_postgres_keycloak
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRESQL_KEYCLOAK_DB}
+      POSTGRES_USER: ${POSTGRESQL_KEYCLOAK_USER}
+      POSTGRES_PASSWORD: ${POSTGRESQL_KEYCLOAK_PASS}
+    networks:
+      - local-spring
+    ports:
+      - "1338:5432"
+
+  keycloak:
+    image: bitnami/keycloak:${KEYCLOAK_VERSION}
+    depends_on:
+      - postgres
+    container_name: local_keycloak
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      DB_VENDOR: postgres
+      DB_ADDR: postgres
+      DB_DATABASE: ${POSTGRESQL_KEYCLOAK_DB}
+      DB_USER: ${POSTGRESQL_KEYCLOAK_USER}
+      DB_PASSWORD: ${POSTGRESQL_KEYCLOAK_PASS}
+    ports:
+      - "1337:8080"
+    restart: unless-stopped
+    networks:
+      - local-spring
+
+networks:
+  local-spring:

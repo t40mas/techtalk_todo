@@ -1,0 +1,28 @@
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: springboothtmx-client
+            authorization-grant-type: authorization_code
+            scope: openid
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:1337/realms/SpringBootHtmx
+            user-name-attribute: preferred_username
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:1337/realms/SpringBootHtmx
+#  datasource:
+#    url: jdbc:postgresql://localhost:1339/springboothtmx
+#    username: postgres
+#    password: 123
+#    driver-class-name: org.postgresql.Driver
+#  jpa:
+#    generate-ddl: true
+
