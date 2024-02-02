@@ -4,7 +4,7 @@
 <li th:classappend="${item.completed?'completed':''}" th:fragment="todoItem(item)" th:id="|list-item-${item.id}|">
     <div class="view">
         <input class="toggle" hx-swap="outerHTML" hx-trigger="click"
-               th:attr="hx-put=@{/todo/{id}/toggle(id=${item.id})},hx-target=|#list-item-${item.id}|"
+               th:attr="hx-put=@{/todo/{id}/toggle(id=${item.id})},hx-target=|list-item-${item.id}|"
                th:attrappend="checked=${item.completed?'true':null}"
                th:id="|toggle-checkbox-${item.id}|"
                type="checkbox">

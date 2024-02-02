@@ -41,7 +41,7 @@ class TodoItemController(var repository: TodoItemRepository) {
     fun addNewTodoItem(@Valid @ModelAttribute("item") formData: TodoItemDTO): String {
         println("used: addNewTodoItem")
         repository.save(TodoItem(title = formData.title))
-        return "redirect:/"
+        return "redirect:/todo"
     }
 
     @PutMapping("/{id}/toggle")
@@ -50,7 +50,7 @@ class TodoItemController(var repository: TodoItemRepository) {
         val todoItem = repository.findById(id).orElseThrow { RuntimeException("No item found for id: $id") }
         todoItem.completed = !todoItem.completed
         repository.save(todoItem)
-        return "redirect:/"
+        return "redirect:/todo"
     }
 
     @PutMapping("/toggle-all")
@@ -61,14 +61,14 @@ class TodoItemController(var repository: TodoItemRepository) {
             todoItem.completed = !todoItem.completed
             repository.save(todoItem)
         }
-        return "redirect:/"
+        return "redirect:/todo"
     }
 
     @DeleteMapping("/{id}")
     fun deleteTodoItem(@PathVariable("id") id: Long): String {
         println("used: deleteTodoItem")
         repository.deleteById(id)
-        return "redirect:/"
+        return "redirect:/todo"
     }
 
     @DeleteMapping("/completed")
@@ -78,7 +78,7 @@ class TodoItemController(var repository: TodoItemRepository) {
         for (item in items) {
             item.id?.let { repository.deleteById(it) }
         }
-        return "redirect:/"
+        return "redirect:/todo"
     }
 
     @PostMapping(headers = ["HX-Request"])

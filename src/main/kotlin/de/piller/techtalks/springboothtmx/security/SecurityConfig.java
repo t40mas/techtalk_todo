@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.session.SessionRegistryImpl;
@@ -43,7 +44,7 @@ class SecurityConfig {
     @Bean
     public SecurityFilterChain resourceServerFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers(new AntPathRequestMatcher("/todo/**/**"))
+                .requestMatchers(new AntPathRequestMatcher("/todo/*/*"))
                 .hasRole("user")
                 .requestMatchers(new AntPathRequestMatcher("/"))
                 .permitAll()
@@ -55,6 +56,7 @@ class SecurityConfig {
                 .logout(logout -> logout.addLogoutHandler(keycloakLogoutHandler).logoutSuccessUrl("/"));
         http.cors(Customizer.withDefaults());
         http.oauth2Login(Customizer.withDefaults());
+        http.csrf(AbstractHttpConfigurer::disable);
         http.formLogin(Customizer.withDefaults());
         return http.build();
     }

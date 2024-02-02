@@ -14,7 +14,7 @@
 <section class="todoapp">
     <header class="header">
         <h1>todos</h1>
-        <form id="new-todo-form" method="post" th:action="@{/}" th:object="${item}">
+        <form id="new-todo-form" method="post" th:action="@{/todo}" th:object="${item}">
             <input autocomplete="false" autofocus class="new-todo" hx-post="/todo"
                    hx-swap="beforeend"
                    hx-target="#todo-list"
@@ -28,7 +28,7 @@
     </header>
     <!-- This section should be hidden by default and shown when there are todos -->
     <section class="main" id="main-section" th:classappend="${totalNumberOfItems == 0 ?'hidden':''}">
-        <form th:action="@{/toggle-all}" th:method="put">
+        <form th:action="@{/todo/toggle-all}" th:method="put">
             <input class="toggle-all" id="toggle-all" onclick="this.form.submit()"
                    type="checkbox">
             <label for="toggle-all">Mark all as complete</label>
@@ -60,19 +60,19 @@
         <ul class="filters">
             <li>
                 <a th:classappend="${filter.name() == 'ALL'?'selected':''}"
-                   th:href="@{/}">All</a>
+                   th:href="@{/todo}">All</a>
             </li>
             <li>
                 <a th:classappend="${filter.name() == 'ACTIVE'?'selected':''}"
-                   th:href="@{/active}">Active</a>
+                   th:href="@{/todo/active}">Active</a>
             </li>
             <li>
                 <a th:classappend="${filter.name() == 'COMPLETED'?'selected':''}"
-                   th:href="@{/completed}">Completed</a>
+                   th:href="@{/todo/completed}">Completed</a>
             </li>
         </ul>
         <!-- Hidden if no completed items are left ↓ -->
-        <form th:action="@{/completed}" th:if="${numberOfCompletedItems > 0}"
+        <form th:action="@{/todo/completed}" th:if="${numberOfCompletedItems > 0}"
               th:method="delete">
             <button class="clear-completed">Clear completed</button>
         </form>
