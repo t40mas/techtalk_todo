@@ -1,1 +1,1 @@
-rootProject.name = "spring-boot-htmx"
+rootProject.name = "techtalk_todo"
