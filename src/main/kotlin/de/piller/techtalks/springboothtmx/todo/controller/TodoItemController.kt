@@ -8,16 +8,16 @@ import jakarta.validation.Valid
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
-import java.security.Principal
 import java.util.stream.Collectors
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/todo")
+
 class TodoItemController(var repository: TodoItemRepository) {
 
     @GetMapping
-    fun index(model: Model, principal: Principal): String {
+    fun index(model: Model): String {
         println("used: index")
         addAttributesForIndex(model, ListFilter.ALL)
         return "index"

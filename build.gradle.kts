@@ -26,6 +26,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
+
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 
@@ -35,7 +36,7 @@ dependencies {
     implementation("org.webjars:webjars-locator:0.41")
     implementation("org.webjars.npm:todomvc-common:1.0.5")
     implementation("org.webjars.npm:todomvc-app-css:2.4.1")
-    implementation("org.webjars.npm:htmx.org:1.7.0")
+    implementation("org.webjars.npm:htmx.org:1.9.10")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")

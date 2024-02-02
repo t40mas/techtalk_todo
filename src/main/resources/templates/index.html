@@ -1,47 +1,44 @@
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Template • TodoMVC</title>
     <link rel="stylesheet" th:href="@{/webjars/todomvc-common/base.css}">
     <link rel="stylesheet" th:href="@{/webjars/todomvc-app-css/index.css}">
-    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
-
+    <script defer th:src="@{/webjars/htmx.org/1.9.10/dist/htmx.min.js}"></script>
 </head>
 <body>
 <section class="todoapp">
     <header class="header">
         <h1>todos</h1>
-        <form id="new-todo-form" th:action="@{/}" method="post" th:object="${item}">
-            <input id="new-todo-input" class="new-todo" placeholder="What needs to be done?" autofocus
-                   autocomplete="false"
-                   name="title"
-                   th:field="*{title}"
-                   hx-target="#todo-list"
+        <form id="new-todo-form" method="post" th:action="@{/}" th:object="${item}">
+            <input autocomplete="false" autofocus class="new-todo" hx-post="/todo"
                    hx-swap="beforeend"
-                   hx-post="/"
+                   hx-target="#todo-list"
                    hx-trigger="keyup[key=='Enter']"
+                   id="new-todo-input"
+                   name="title"
+                   placeholder="What needs to be done?"
+                   th:field="*{title}"
             >
         </form>
     </header>
     <!-- This section should be hidden by default and shown when there are todos -->
-    <section id="main-section" class="main" th:classappend="${totalNumberOfItems == 0?'hidden':''}">
+    <section class="main" id="main-section" th:classappend="${totalNumberOfItems == 0 ?'hidden':''}">
         <form th:action="@{/toggle-all}" th:method="put">
-            <input id="toggle-all" class="toggle-all" type="checkbox"
-                   onclick="this.form.submit()">
+            <input class="toggle-all" id="toggle-all" onclick="this.form.submit()"
+                   type="checkbox">
             <label for="toggle-all">Mark all as complete</label>
         </form>
-        <ul id="todo-list" class="todo-list" th:remove="all-but-first">
-            <li th:insert="fragments :: todoItem(${item})" th:each="item : ${todos}" th:remove="tag">
+        <ul class="todo-list" id="todo-list" th:remove="all-but-first">
+            <li th:each="item : ${todos}" th:insert="~{fragments :: todoItem(${item})}" th:remove="tag">
             </li>
-            <!-- These are here just to show the structure of the list items -->
-            <!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
             <li class="completed">
                 <div class="view">
-                    <input class="toggle" type="checkbox" checked>
+                    <input checked class="toggle" type="checkbox">
                     <label>Taste JavaScript</label>
                     <button class="destroy"></button>
                 </div>
@@ -57,27 +54,26 @@
             </li>
         </ul>
     </section>
-    <!-- This footer should be hidden by default and shown when there are todos -->
-    <footer id="main-footer" class="footer" th:classappend="${totalNumberOfItems == 0?'hidden':''}">
-        <span th:replace="fragments :: active-items-count">
+    <footer class="footer" id="main-footer" th:classappend="${totalNumberOfItems == 0?'hidden':''}">
+        <span th:replace="~{fragments :: active-items-count}">
         </span>
         <ul class="filters">
             <li>
-                <a th:href="@{/}"
-                   th:classappend="${filter.name() == 'ALL'?'selected':''}">All</a>
+                <a th:classappend="${filter.name() == 'ALL'?'selected':''}"
+                   th:href="@{/}">All</a>
             </li>
             <li>
-                <a th:href="@{/active}"
-                   th:classappend="${filter.name() == 'ACTIVE'?'selected':''}">Active</a>
+                <a th:classappend="${filter.name() == 'ACTIVE'?'selected':''}"
+                   th:href="@{/active}">Active</a>
             </li>
             <li>
-                <a th:href="@{/completed}"
-                   th:classappend="${filter.name() == 'COMPLETED'?'selected':''}">Completed</a>
+                <a th:classappend="${filter.name() == 'COMPLETED'?'selected':''}"
+                   th:href="@{/completed}">Completed</a>
             </li>
         </ul>
         <!-- Hidden if no completed items are left ↓ -->
-        <form th:action="@{/completed}" th:method="delete"
-              th:if="${numberOfCompletedItems > 0}">
+        <form th:action="@{/completed}" th:if="${numberOfCompletedItems > 0}"
+              th:method="delete">
             <button class="clear-completed">Clear completed</button>
         </form>
     </footer>
@@ -85,13 +81,13 @@
 
 <!-- Scripts here. Don't remove ↓ -->
 <script th:src="@{/webjars/todomvc-common/base.js}"></script>
-<script type="text/javascript" th:src="@{/webjars/htmx.org/dist/htmx.min.js}"></script>
+<script th:src="@{/webjars/htmx.org/dist/htmx.min.js}" type="text/javascript"></script>
 <script>
     htmx.on('#new-todo-input', 'htmx:afterRequest', function (evt) {
         evt.detail.elt.value = '';
     });
 
-    htmx.on('htmx:afterSwap', function (evt) {
+    htmx.on('htmx:afterSwap', function () {
         let items = document.querySelectorAll('#todo-list li');
         let mainSection = document.getElementById('main-section');
         let mainFooter = document.getElementById('main-footer');
@@ -104,7 +100,6 @@
             mainFooter.classList.add('hidden');
         }
     });
-
     document.getElementById('new-todo-form').addEventListener('submit', function (evt) {
         evt.preventDefault();
     })

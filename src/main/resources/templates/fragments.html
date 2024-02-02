@@ -1,28 +1,27 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      lang="en">
-<li th:fragment="todoItem(item)" th:classappend="${item.completed?'completed':''}" th:id="|list-item-${item.id}|">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<li th:classappend="${item.completed?'completed':''}" th:fragment="todoItem(item)" th:id="|list-item-${item.id}|">
     <div class="view">
-        <input th:id="|toggle-checkbox-${item.id}|" class="toggle" type="checkbox"
+        <input class="toggle" hx-swap="outerHTML" hx-trigger="click"
+               th:attr="hx-put=@{/todo/{id}/toggle(id=${item.id})},hx-target=|#list-item-${item.id}|"
                th:attrappend="checked=${item.completed?'true':null}"
-               th:attr="hx-put=@{/{id}/toggle(id=${item.id})},hx-target=|#list-item-${item.id}|"
-               hx-trigger="click"
-               hx-swap="outerHTML"
-        >
+               th:id="|toggle-checkbox-${item.id}|"
+               type="checkbox">
         <label th:text="${item.title}">Taste JavaScript</label>
         <button class="destroy"
-                th:attr="hx-delete=@{/{id}(id=${item.id})},hx-target=|#list-item-${item.id}|"
-                hx-trigger="click"
                 hx-swap="outerHTML"
+                hx-trigger="click"
+                th:attr="hx-delete=@{/todo/{id}(id=${item.id})},hx-target=|#list-item-${item.id}|"
         ></button>
     </div>
 </li>
-<span th:fragment="active-items-count"
-      id="active-items-count"
-      class="todo-count"
-      hx-get="/active-items-count"
+<span class="todo-count"
+      hx-get="/todo/active-items-count"
       hx-swap="outerHTML"
-      hx-trigger="itemAdded from:body, itemCompletionToggled from:body, itemDeleted from:body">
+      hx-trigger="itemAdded from:body, itemCompletionToggled from:body, itemDeleted from:body"
+      id="active-items-count"
+      th:fragment="active-items-count">
         <th:block th:unless="${numberOfActiveItems == 1}">
             <span class="todo-count"><strong th:text="${numberOfActiveItems}">0</strong> items left</span>
         </th:block>
