@@ -5,6 +5,7 @@ import de.piller.techtalks.springboothtmx.todo.model.TodoItemDTO
 import de.piller.techtalks.springboothtmx.todo.model.TodoItemRepository
 import jakarta.servlet.http.HttpServletResponse
 import jakarta.validation.Valid
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
@@ -13,7 +14,6 @@ import java.util.stream.Collectors
 
 @Controller
 @RequestMapping("/todo")
-
 class TodoItemController(var repository: TodoItemRepository) {
 
     @GetMapping

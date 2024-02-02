@@ -11,20 +11,19 @@ spring:
       client:
         registration:
           keycloak:
+            client-name: springboothtmx-client
             client-id: springboothtmx-client
+            client-secret: QQAeT15xHd99PhJuPp6hBOhZRz3WYHVv
             authorization-grant-type: authorization_code
-            scope: openid
+            scope: openid,offline_access,profile
         provider:
           keycloak:
             issuer-uri: http://localhost:1337/realms/SpringBootHtmx
             user-name-attribute: preferred_username
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:1337/realms/SpringBootHtmx
   datasource:
     url: jdbc:postgresql://localhost:1339/springboothtmx
     username: springboothtmx
-    password: springboothtmx
+    password: s pringboothtmx
     driver-class-name: org.postgresql.Driver
   jpa:
     generate-ddl: true
