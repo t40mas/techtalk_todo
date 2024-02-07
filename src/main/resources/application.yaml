@@ -13,12 +13,12 @@ spring:
           keycloak:
             client-name: springboothtmx-client
             client-id: springboothtmx-client
-            client-secret: QQAeT15xHd99PhJuPp6hBOhZRz3WYHVv
+            client-secret: ymz4ik66K0r5U6mcgE6TMg4cSzZO0bSj
             authorization-grant-type: authorization_code
             scope: openid,offline_access,profile
         provider:
           keycloak:
-            issuer-uri: http://localhost:1337/realms/SpringBootHtmx
+            issuer-uri: http://localhost:1337/realms/springboothtmx
             user-name-attribute: preferred_username
   datasource:
     url: jdbc:postgresql://localhost:1339/springboothtmx
