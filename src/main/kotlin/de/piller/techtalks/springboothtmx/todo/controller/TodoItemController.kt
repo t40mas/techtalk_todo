@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import java.security.Principal
 import java.util.stream.Collectors
 
 
@@ -17,7 +18,7 @@ import java.util.stream.Collectors
 class TodoItemController(var repository: TodoItemRepository) {
 
     @GetMapping
-    fun index(model: Model): String {
+    fun index(model: Model, principal: Principal): String {
         println("used: index")
         addAttributesForIndex(model, ListFilter.ALL)
         return "index"
