@@ -4,7 +4,7 @@
 <li th:classappend="${item.completed?'completed':''}" th:fragment="todoItem(item)" th:id="|list-item-${item.id}|">
     <div class="view">
         <input class="toggle" hx-swap="outerHTML" hx-trigger="click"
-               th:attr="hx-put=@{/todo/{id}/toggle(id=${item.id})},hx-target=|list-item-${item.id}|"
+               th:attr="hx-put=@{/{id}/toggle(id=${item.id})},hx-target=|list-item-${item.id}|"
                th:attrappend="checked=${item.completed?'true':null}"
                th:id="|toggle-checkbox-${item.id}|"
                type="checkbox">
@@ -12,12 +12,12 @@
         <button class="destroy"
                 hx-swap="outerHTML"
                 hx-trigger="click"
-                th:attr="hx-delete=@{/todo/{id}(id=${item.id})},hx-target=|#list-item-${item.id}|"
+                th:attr="hx-delete=@{/{id}(id=${item.id})},hx-target=|#list-item-${item.id}|"
         ></button>
     </div>
 </li>
 <span class="todo-count"
-      hx-get="/todo/active-items-count"
+      hx-get="/active-items-count"
       hx-swap="outerHTML"
       hx-trigger="itemAdded from:body, itemCompletionToggled from:body, itemDeleted from:body"
       id="active-items-count"

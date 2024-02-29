@@ -2,28 +2,28 @@ spring:
   docker:
     compose:
       enabled: true
-  mvc:
-    hiddenmethod:
-      filter:
-        enabled: true
   security:
     oauth2:
       client:
-        registration:
-          keycloak:
-            client-name: springboothtmx-client
-            client-id: springboothtmx-client
-            client-secret: ymz4ik66K0r5U6mcgE6TMg4cSzZO0bSj
-            authorization-grant-type: authorization_code
-            scope: openid,offline_access,profile
         provider:
           keycloak:
             issuer-uri: http://localhost:1337/realms/springboothtmx
             user-name-attribute: preferred_username
+        registration:
+          keycloak:
+            provider: keycloak
+            client-id: springboothtmx-client
+            client-name: springboothtmx-client
+            client-secret: ymz4ik66K0r5U6mcgE6TMg4cSzZO0bSj
+            scope:
+              - openid
+              - offline_access
+              - profile
+            authorization-grant-type: authorization_code
   datasource:
     url: jdbc:postgresql://localhost:1339/springboothtmx
     username: springboothtmx
-    password: s pringboothtmx
+    password: springboothtmx
     driver-class-name: org.postgresql.Driver
   jpa:
     generate-ddl: true
